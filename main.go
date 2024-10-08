@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 	"strings"
+	"io/ioutil"
 )
 
 func isValidIP(ip string) bool {
@@ -59,8 +60,9 @@ func customUsage() {
 	fmt.Println("  -ip <IP address> : Specify the IP address to scan.")
 	fmt.Println("\nOptional options:")
 	fmt.Println("  -timeout <milliseconds> : Timeout in milliseconds for each connection attempt. Default value: 500 ms.")
+	fmt.Println("  -o <filename> : Output filename to export results.")
 	fmt.Println("\nExample usage:")
-	fmt.Println("  sudo go run main.go -ip 127.0.0.1 -timeout 1000")
+	fmt.Println("  sudo go run main.go -ip 127.0.0.1 -timeout 1000 -o results.txt")
 }
 
 func loadingAnimation(done chan bool) {
@@ -87,8 +89,10 @@ func printProgressBar(current, total int) {
 func main() {
 	var ip string
 	var timeout int
+	var outputFile string
 	flag.StringVar(&ip, "ip", "", "IP address to scan (required)")
 	flag.IntVar(&timeout, "timeout", 500, "Timeout in milliseconds for connection")
+	flag.StringVar(&outputFile, "o", "", "Output filename to export results")
 
 	flag.Usage = customUsage
 	flag.Parse()
@@ -118,11 +122,12 @@ func main() {
 	done := make(chan bool)
 	go loadingAnimation(done)
 
-	const maxGoroutines = 1000
+	const maxGoroutines = 5000
 	guard := make(chan struct{}, maxGoroutines)
 	totalPorts := 65535
 
 	var openPorts []string
+	var openPortNumbers []string
 
 	for port := 1; port <= totalPorts; port++ {
 		wg.Add(1)
@@ -136,6 +141,7 @@ func main() {
 				service := getServiceName(port)
 				mu.Lock()
 				openPorts = append(openPorts, fmt.Sprintf("Port %d is open (%s)", port, service))
+				openPortNumbers = append(openPortNumbers, fmt.Sprintf("%d", port))
 				mu.Unlock()
 			}
 
@@ -156,6 +162,19 @@ func main() {
 		color.Cyan("\nOpen ports found:")
 		for _, portInfo := range openPorts {
 			fmt.Println(portInfo)
+		}
+		if outputFile != "" {
+			// Preparar la línea nmap
+			nmapLine := fmt.Sprintf("nmap -sCV -p%s %s", strings.Join(openPortNumbers, ","), ip)
+			openPorts = append(openPorts, "\n"+nmapLine)
+
+			// Escribir los resultados y la línea de nmap en el archivo
+			err := ioutil.WriteFile(outputFile, []byte(strings.Join(openPorts, "\n")), 0644)
+			if err != nil {
+				color.Red("Error writing to file:", err)
+			} else {
+				color.Cyan("Results exported to %s\n", outputFile)
+			}
 		}
 	} else {
 		color.Yellow("No open ports found.")
