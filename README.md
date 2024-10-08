@@ -51,8 +51,7 @@ Follow these steps to install and run the GoScan:
 - `-ip <IP address>`: Specify the target IP address to scan. This option is required.
 - `-timeout <milliseconds>`: Set the timeout duration for each connection attempt. Default value is 500 ms.
 - `-o <filename>`: Specify an output filename to export results, including a suggested `nmap` command.
-- `-start <port>`: Specify the starting port for the scan. Default value is 1.
-- `-end <port>`: Specify the ending port for the scan. Default value is 65535.
+
 
 ### Example
 
