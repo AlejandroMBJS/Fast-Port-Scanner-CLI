@@ -62,7 +62,7 @@ func customUsage() {
 	fmt.Println("  -timeout <milliseconds> : Timeout in milliseconds for each connection attempt. Default value: 500 ms.")
 	fmt.Println("  -o <filename> : Output filename to export results.")
 	fmt.Println("\nExample usage:")
-	fmt.Println("  sudo go run main.go -ip 127.0.0.1 -timeout 1000 -o results.txt")
+	fmt.Println("  sudo goScan -ip 127.0.0.1 -timeout 1000 -o results.txt")
 }
 
 func loadingAnimation(done chan bool) {
