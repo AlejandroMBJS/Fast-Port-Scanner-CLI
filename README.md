@@ -43,7 +43,7 @@ Follow these steps to install and run the GoScan:
 ### Basic Command
 
 ```bash
-./goscan -ip 127.0.0.1 -timeout 1000
+./goscan -ip 127.0.0.1
 ```
 
 ### Options
