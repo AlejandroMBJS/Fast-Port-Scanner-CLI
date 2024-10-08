@@ -26,3 +26,44 @@ Follow these steps to install and run the GoScan:
    ```bash
    git clone https://github.com/yourusername/goscan.git
    cd goscan
+   ```
+
+2. **Build the application**:
+   ```bash
+   go build -o goscan main.go
+   ```
+
+3. **Run the application**:
+   ```bash
+   ./goscan -ip <IP address> -timeout <timeout in ms>
+   ```
+
+## Usage
+
+### Basic Command
+
+```bash
+./goscan -ip 127.0.0.1 -timeout 1000
+```
+
+### Options
+
+- `-ip <IP address>`: Specify the target IP address to scan. This option is required.
+- `-timeout <milliseconds>`: Set the timeout duration for each connection attempt. Default value is 500 ms.
+- `-o <filename>`: Specify an output filename to export results, including a suggested `nmap` command.
+- `-start <port>`: Specify the starting port for the scan. Default value is 1.
+- `-end <port>`: Specify the ending port for the scan. Default value is 65535.
+
+### Example
+
+To scan the local loopback address with a timeout of 1000 milliseconds and export the results, use:
+
+```bash
+sudo ./goscan -ip 127.0.0.1 -timeout 1000 -o results.txt
+```
+
+## Contribution
+
+Contributions are welcome! If you encounter any errors or have suggestions for improvements, please feel free to fork the repository, make your changes, and submit a pull request. I would be glad to hear any feedback or corrections you might have.
+
+Let me know if you need any further adjustments!
