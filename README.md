@@ -35,7 +35,7 @@ Follow these steps to install and run the GoScan:
 
 3. **Run the application**:
    ```bash
-   ./goscan -ip <IP address> -timeout <timeout in ms>
+   ./goscan -ip <IP address> -timeout <timeout in ms optional> -o <output filename>
    ```
 
 ## Usage
