@@ -31,11 +31,12 @@ Follow these steps to install and run the GoScan:
 2. **Build the application**:
    ```bash
    go build -o goscan main.go
+   sudo mv goscan /usr/bin/.
    ```
 
 3. **Run the application**:
    ```bash
-   ./goscan -ip <IP address> -timeout <timeout in ms optional> -o <output filename>
+   goscan -ip <IP address> -timeout <timeout in ms optional> -o <output filename>
    ```
 
 ## Usage
