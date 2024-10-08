@@ -24,8 +24,8 @@ Follow these steps to install and run the GoScan:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/goscan.git
-   cd goscan
+   git clone https://github.com/AlejandroMBJS/GoScanCLI
+   cd GoScanCLI
    ```
 
 2. **Build the application**:
